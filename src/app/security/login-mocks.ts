@@ -15,10 +15,10 @@ export const LOGIN_MOCKS: AppUserAuth[] = [
     userName: 'siripala',
     bearerToken: 'sii39ewr3ewrw3ew',
     isAuthenticated: true,
-    canAccessProducts: false,
+    canAccessProducts: true,
     canAddProduct: false,
     canSaveProduct: false,
-    canAccessCategories: true,
+    canAccessCategories: false,
     canAddCatagory: true
   }
 ];

@@ -8,15 +8,16 @@
     </div>
     <ul class="nav navbar-nav">
       <li>
-        <a routerLink="/products">Products</a>
+        <a routerLink="/products" *ngIf="securityObject.canAccessProducts">Products</a>
       </li>
       <li>
-        <a routerLink="/categories">Categories</a>
+        <a routerLink="/categories" *ngIf="securityObject.canAccessCategories">Categories</a>
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li>
-        <a routerLink="/login">Login</a>
+        <a routerLink="#" (click)="logout()" *ngIf="securityObject.isAuthenticated">Logout</a>
+        <a routerLink="/login" *ngIf="!securityObject.isAuthenticated">Login</a>
       </li>
     </ul>
   </div>
