@@ -1,27 +1,50 @@
 # PTC
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.1.
+proxy.conf.json
 
-## Development server
+{
+  "/api": {
+    "target": "https://localhost:5001",
+    "secure": false
+  }
+}
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+angular.json
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+ "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "PTC:build",
+            "proxyConfig": "proxy.conf.json"
+          },
+          ....
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+---------------------------------------
+startup.cs
 
-## Running unit tests
+// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+            app.UseHttpsRedirection();
 
-## Running end-to-end tests
+//**************************************************************************************
+            // app.UseCors(
+            //         options => options.WithOrigins(
+            //           "http://localhost:4200").AllowAnyMethod().AllowAnyHeader()
+            //       );
+//**************************************************************************************            
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+            app.UseMvc();
+        }
