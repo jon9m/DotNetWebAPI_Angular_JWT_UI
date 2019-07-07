@@ -14,6 +14,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SecurityService } from './security/security.service';
 import { LoginComponent } from './security/login.component';
 import { HttpInterceptorModule } from './security/http-interceptor';
+import { HasClaimDirective } from './security/has-claim.directive';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { HttpInterceptorModule } from './security/http-interceptor';
     ProductDetailComponent,
     CategoryListComponent,
     DashboardComponent,
-    LoginComponent
+    LoginComponent,
+    HasClaimDirective
   ],
   imports: [
     BrowserModule,
