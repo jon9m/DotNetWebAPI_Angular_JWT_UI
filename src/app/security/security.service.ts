@@ -2,7 +2,16 @@ import { Injectable } from '@angular/core';
 import { AppUserAuth } from './app-user-auth';
 import { AppUser } from './app-user';
 import { Observable, of } from 'rxjs';
-import { LOGIN_MOCKS } from './login-mocks';
+import { tap } from 'rxjs/operators/tap';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+
+
+const API_URL = 'http://localhost:4200/api/security/';
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -11,18 +20,17 @@ export class SecurityService {
 
   securityObject: AppUserAuth = new AppUserAuth();
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   login(entity: AppUser): Observable<AppUserAuth> {
     this.resetSecurityObject();
-    Object.assign(this.securityObject, LOGIN_MOCKS.find(user => {
-      return user.userName.toLowerCase() === entity.userName.toLowerCase();
-    }));
 
-    if (this.securityObject.userName !== '') {
-      localStorage.setItem('bearerToken', this.securityObject.bearerToken);
-    }
-    return of<AppUserAuth>(this.securityObject);
+    return this.http.post<AppUserAuth>(API_URL + 'login', entity, httpOptions).pipe(
+      tap(resp => {
+        Object.assign(this.securityObject, resp);
+        localStorage.setItem('bearerToken', this.securityObject.bearerToken);
+      })
+    );
   }
 
   logout(): void {

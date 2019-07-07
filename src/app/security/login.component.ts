@@ -28,7 +28,11 @@ export class LoginComponent implements OnInit {
       if (this.returnUrl) {
         this.router.navigate([this.returnUrl]);
       }
-    });
+    },
+      () => {
+        this.securityObject = new AppUserAuth();
+      }
+    );
   }
 
 }
