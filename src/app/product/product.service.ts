@@ -4,6 +4,7 @@ import { of } from 'rxjs/observable/of';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Product } from './product';
+import { SecurityService } from '../security/security.service';
 
 const API_URL = 'http://localhost:4200/api/product/';
 const httpOptions = {
@@ -15,9 +16,16 @@ const httpOptions = {
 @Injectable()
 export class ProductService {
 
+  // constructor(private http: HttpClient, private securityService: SecurityService) { } -- use interceptor
   constructor(private http: HttpClient) { }
 
   getProducts(): Observable<Product[]> {
+    // const httpHeaderOptions = new HttpHeaders().set('Authorization', 'Bearer ' + this.securityService.securityObject.bearerToken);
+    // return this.http.get<Product[]>(API_URL, {
+    //   headers: httpHeaderOptions
+    // });
+    // -- use interceptor
+
     return this.http.get<Product[]>(API_URL);
   }
 

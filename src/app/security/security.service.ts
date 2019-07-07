@@ -22,7 +22,7 @@ export class SecurityService {
 
   constructor(private http: HttpClient) { }
 
-  login(entity: AppUser): Observable<AppUserAuth> {
+  login = (entity: AppUser): Observable<AppUserAuth> => {
     this.resetSecurityObject();
 
     return this.http.post<AppUserAuth>(API_URL + 'login', entity, httpOptions).pipe(
